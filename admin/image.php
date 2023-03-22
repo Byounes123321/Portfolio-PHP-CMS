@@ -25,14 +25,31 @@ switch( $_GET['type'] )
     $record = mysqli_fetch_assoc( $result );
 
     if( !$record['photo'] ) $record['photo'] = $camera;
+
+    $img = $record['photo'];
     
+    break;
+
+  case 'skills':
+
+  $query = 'SELECT logo
+    FROM skills
+    WHERE id = '.$_GET['id'].'
+    LIMIT 1';
+    $result = mysqli_query($connect, $query);
+    $record = mysqli_fetch_assoc($result);
+  
+    if( !$record['logo']) $record['logo'] = $camera;
+
+    $img = $record['logo'];
+
     break;
       
 }
 
 include 'includes/wideimage/WideImage.php';
 
-$data = base64_decode( explode( ',', $record['photo'] )[1] );
+$data = base64_decode( explode( ',', $img)[1] );
 $img = WideImage::loadFromString( $data );
 
 if( isset( $_GET['width'] ) and isset( $_GET['height'] ) )
