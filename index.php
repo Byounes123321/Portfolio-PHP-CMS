@@ -46,13 +46,9 @@ include( 'admin/includes/functions.php' );
 
       <?php if($record['photo']): ?>
 
-        <p>The image can be inserted using a base64 image:</p>
+        <p>This is a project image</p>
 
-        <img src="<?php echo $record['photo']; ?>">
-
-        <p>Or by streaming the image through the image.php file:</p>
-
-        <img src="admin/image.php?type=project&id=<?php echo $record['id']; ?>&width=100&height=100">
+        <img src="admin/image.php?type=project&id=<?php echo $record['id']; ?>&width=200&height=200">
 
       <?php else: ?>
 
@@ -65,6 +61,43 @@ include( 'admin/includes/functions.php' );
     <hr>
 
   <?php endwhile; ?>
+
+
+
+  <?php
+  // education section
+  $query = 'SELECT *
+    FROM education
+    ORDER BY date DESC';
+  $result = mysqli_query( $connect, $query );
+
+  ?>
+
+
+  <h1>Education</h1>
+  <p>There are <?php echo mysqli_num_rows($result); ?> education history in the database!</p>
+
+  <?php while($record = mysqli_fetch_assoc($result)): ?>
+
+<div>
+
+  <h2><?php echo $record['degree']; ?></h2>
+  <?php echo $record['major']; ?><br />
+  <?php echo $record['school']; ?><br />
+  <?php echo $record['date']; ?><br />
+  <?php echo $record['course']; ?>
+
+
+</div>
+<hr>
+
+<div>
+
+
+
+</div>
+
+<?php endwhile; ?>
 
 </body>
 </html>
