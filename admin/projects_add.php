@@ -26,11 +26,29 @@ if( isset( $_POST['title'] ) )
          "'.mysqli_real_escape_string( $connect, $_POST['url'] ).'"
       )';
     mysqli_query( $connect, $query );
-    
+
+    $project_id = mysqli_insert_id( $connect ); 
+
     set_message( 'Project has been added' );
-    
+
+   // insert project skills into projectXskill table
+foreach( $_POST['skills'] as $skill_id )
+{
+  $query = 'INSERT INTO projectXskill (
+      projectId,
+      skillId
+    ) VALUES (
+       "'.$project_id.'",
+       "'.$skill_id.'"
+    )';
+  mysqli_query( $connect, $query );
+}
   }
-  
+  else
+  {
+    set_message( 'Please fill in all fields' );
+  }
+
   header( 'Location: projects.php' );
   die();
   
@@ -93,7 +111,21 @@ include( 'includes/header.php' );
   ?>
   
   <br>
-  
+  <label for="skills"> Skills Used:</label>
+<?php 
+$query = 'SELECT * FROM skills';
+$result = mysqli_query( $connect, $query );
+//create a select box with all the skills so the user can select which skills were used for the project
+echo '<select name="skills[]" id="skills" multiple>';
+while( $record = mysqli_fetch_assoc( $result ) )
+{
+  echo '<option value="'.$record['id'].'"';
+  echo '>'.$record['name'].'</option>';
+}
+echo '</select>';
+?>
+
+
   <input type="submit" value="Add Project">
   
 </form>

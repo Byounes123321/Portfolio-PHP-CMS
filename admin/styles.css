@@ -4,7 +4,7 @@ a:active,
 a:hover,
 a:visited {
   text-decoration: none;
-  color: #FF8500;
+  color: blue;
 }
 
 table {
@@ -72,16 +72,21 @@ input {
 
 input[type=submit] {
   border: 0;
-  background-color: #eb741d;
+  background-color: blue;
   color: #fff;
   padding: 10px 10px;
   font-size: 110%;
   margin-top: 10px;
+  cursor: pointer;
+  width: 25%;
+  margin:auto;
+  margin-left: 37.5%;
+
 }
 
 #dashboard {
-  padding: 0;
-  margin: 0;
+display: flex;
+justify-content: center;
 }
 
 #dashboard li a:link,
@@ -91,16 +96,14 @@ input[type=submit] {
   color: #fff;
 }
 #dashboard li {
-  background-color: #eb741d;
-  display: inline-block;
-  width: 22%;
-  margin: 1%;
-  padding: 2%;
-  box-sizing: border-box;
+  background-color: blue;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  width: 100px;
   text-align: center;
+  text-decoration: none;
   list-style: none;
-  list-style-position: inside;
-  border: none;
 }
 #dashboard i {
   margin-bottom: 5px;

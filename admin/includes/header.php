@@ -7,6 +7,7 @@
   
   <title>Website Admin</title>
   
+  <link href="public/style/style.css" type="text/css" rel="stylesheet">
   <link href="styles.css" type="text/css" rel="stylesheet">
   
   <script src="https://cdn.ckeditor.com/ckeditor5/12.4.0/classic/ckeditor.js"></script>

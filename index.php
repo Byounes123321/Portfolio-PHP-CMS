@@ -2,9 +2,13 @@
 include('admin/includes/database.php');
 include('admin/includes/config.php');
 include('admin/includes/functions.php');
-
+/*
+TODO:
+-Add spotlight projects
+- Add "more projects" tab to show all projects that are not spotlight
+-Actually add my projects and begin uploading them to to main site
+*/
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -102,42 +106,55 @@ include('admin/includes/functions.php');
         <h2 id="projects">Projects</h2>
       </div>
       <?php 
-        $query = 'SELECT *
-          FROM projects
-          ORDER BY date DESC';
-          $result = mysqli_query(
-            $connect, $query
-          );
-          ?>
+              $query = 'SELECT *
+                FROM projects
+                ORDER BY date DESC';
+              $result = mysqli_query(
+                $connect, $query
+              );
+              ?>
 
-         <?php while($record = mysqli_fetch_assoc($result)): ?>
+              <?php while($record = mysqli_fetch_assoc($result)): ?>
 
-      <div class="projects">
-        <div class="projImgs">
-          <img class="projectimg" src='<?php echo $record['photo']; ?>' />
-          <!-- <div class="projectSkills">
-            <img src="https://aeroclub-issoire.fr/wp-content/uploads/2020/05/image-not-found.jpg" />
-            <img src="https://aeroclub-issoire.fr/wp-content/uploads/2020/05/image-not-found.jpg" />
-            <img src="https://aeroclub-issoire.fr/wp-content/uploads/2020/05/image-not-found.jpg" />
-            <img src="https://aeroclub-issoire.fr/wp-content/uploads/2020/05/image-not-found.jpg" />
-            <img src="https://aeroclub-issoire.fr/wp-content/uploads/2020/05/image-not-found.jpg" />
-          </div> -->
-        </div>
-        <div class="projDesc">
-          <div>
-            <h3><?php
-              if(!$record['url']) {echo $record['title'];}
-              else 
-             echo "<a href=".$record['url'].">".$record['title']."</a>"?></h3>
-          </div>
-          <div>
-            <p><?php echo $record['content'];?>
-            </p>
-          </div>
-        </div>
-      </div>
-      <br>
-      <?php endwhile; ?>
+                <div class="projects">
+                  <div class="projImgs">
+                    <img class="projectimg" src='<?php echo $record['photo']; ?>' />
+                    <div class="projectSkills">
+                      <?php
+                      $query2 = 'SELECT *
+                      FROM skills
+                      INNER JOIN projectXskill ON projectXskill.skillId = skills.id
+                      WHERE projectXskill.projectId = '.$record['id'];
+
+                        $result2 = mysqli_query($connect, $query2);
+
+                        if (!$result2) {
+                          printf("Error: %s\n", mysqli_error($connect));
+                          exit();
+                        }
+
+                        while ($record2 = mysqli_fetch_assoc($result2)) {
+                          echo '<img src="'.$record2['logo'].'" alt="icon" />';
+                        }
+                      ?>
+                    </div>
+                  </div>
+                  <div class="projDesc">
+                    <div>
+                      <h3><?php
+                        if(!$record['url']) {echo $record['title'];}
+                        else 
+                      echo "<a href=".$record['url'].">".$record['title']."</a>"?></h3>
+                    </div>
+                    <div>
+                      <p><?php echo $record['content'];?>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <br>
+              <?php endwhile; ?>
+
 
       <!-- <div class="moreProj">
         <h2>More Projects</h2>

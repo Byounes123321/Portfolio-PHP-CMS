@@ -39,6 +39,7 @@ $result = mysqli_query( $connect, $query );
     <th align="left">Title</th>
     <th align="center">Type</th>
     <th align="center">Date</th>
+    <th align="center">Skills</th>
     <th></th>
     <th></th>
     <th></th>
@@ -55,6 +56,21 @@ $result = mysqli_query( $connect, $query );
       </td>
       <td align="center"><?php echo $record['type']; ?></td>
       <td align="center" style="white-space: nowrap;"><?php echo htmlentities( $record['date'] ); ?></td>
+      <td>
+        <?php
+          $query = 'SELECT skills.name
+            FROM skills
+            INNER JOIN projectXskill ON projectXskill.skillId = skills.id
+            WHERE projectXskill.projectId = '.$record['id'];
+          $skills = mysqli_query($connect, $query);
+          if (!$skills) {
+              die('Query failed: ' . mysqli_error($connect));
+          }
+          while ($skill = mysqli_fetch_assoc($skills)) {
+              echo $skill['name'] . '<br>';
+          }
+        ?>
+      </td>
       <td align="center"><a href="projects_photo.php?id=<?php echo $record['id']; ?>">Photo</i></a></td>
       <td align="center"><a href="projects_edit.php?id=<?php echo $record['id']; ?>">Edit</i></a></td>
       <td align="center">

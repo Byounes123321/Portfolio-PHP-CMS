@@ -184,7 +184,6 @@ h1 {
 .projectSkills {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  grid-auto-rows: 50px;
   grid-gap: 10px;
 }
 h3 {
